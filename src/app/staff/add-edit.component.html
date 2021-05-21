@@ -1,0 +1,48 @@
+<h1 *ngIf="isAddMode">Đăng ký nhân viên mới</h1>
+<h1 *ngIf="!isAddMode">Biên soạn thông tin nhân viên</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row" *ngIf="!isAddMode">
+        <div class="form-group col-6">
+            <label>ID</label>
+            <input type="text" formControlName="PK_StaffID" class="form-control" [readonly]="true" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label>Name</label>
+            <input type="text" formControlName="Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
+            <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
+                <div *ngIf="f.Name.errors.required">Vui lòng nhập Tên</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label>Email</label>
+            <input type="text" formControlName="Email" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" />
+            <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+                <div *ngIf="f.Email.errors.required">Vui lòng nhập Email</div>
+                <div *ngIf="f.Email.errors.pattern">Email không hợp lệ</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label>Tel</label>
+            <input type="tel" formControlName="Tel" class="form-control" maxlength="14" [ngClass]="{ 'is-invalid': submitted && f.Tel.errors }" />
+            <div *ngIf="submitted && f.Tel.errors" class="invalid-feedback">
+                <div *ngIf="f.Tel.errors.required">Vui lòng nhập Tel</div>
+                <div *ngIf="f.Tel.errors.pattern">Tel không hợp lệ</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-sm btn-primary mr-1">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <span *ngIf="isAddMode">Register</span>
+            <span *ngIf="!isAddMode">Update</span>
+        </button>
+        <a routerLink="/staff" class="btn btn-link">Back</a>
+    </div>
+</form>

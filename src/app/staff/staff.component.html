@@ -1,0 +1,41 @@
+﻿<h1>Danh sách nhân viên</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add</a>
+<nav class="navbar">
+    <input type="text" class="form-control" name="Name" [(ngModel)]="Name" (ngModelChange)="Search()"
+        placeholder="Enter name to search">
+</nav>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 10%" (click)="sort('PK_StaffID')">ID &nbsp; <i class="fa fa-sort"></i></th>
+            <th style="width: 30%" (click)="sort('Name')">Name &nbsp; <i class="fa fa-sort"></i></th>
+            <th style="width: 30%" (click)="sort('Email')">Email &nbsp; <i class="fa fa-sort"></i></th>
+            <th style="width: 20%" (click)="sort('Tel')">Tel &nbsp; <i class="fa fa-sort"></i></th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let staff of staffs | orderBy: key: reverse | paginate: {itemsPerPage:3, currentPage:p};">
+            <td>{{staff.PK_StaffID}}</td>
+            <td>{{staff.Name}}</td>
+            <td>{{staff.Email}}</td>
+            <td>{{staff.Tel}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{staff.PK_StaffID}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <!-- <a routerLink="confirm" [state]="staff" class="btn btn-sm btn-danger btn-delete-user">Delete</a> -->
+                <button class="btn btn-sm btn-danger btn-delete-user"
+                    mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage"
+                    placement="left" (confirm)="deleteStaff(staff.PK_StaffID)" (cancel)="cancelClicked = true">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!staffs">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<pagination-controls responsive="true" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next">
+</pagination-controls>
