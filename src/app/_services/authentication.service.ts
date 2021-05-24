@@ -20,6 +20,7 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+    /** Đăng nhập */
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/users/ValidLogin`, { username, password })
             .pipe(map(user => {
@@ -30,6 +31,7 @@ export class AuthenticationService {
             }));
     }
 
+    /** Đăng xuất */
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

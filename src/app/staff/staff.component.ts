@@ -1,9 +1,8 @@
 ﻿import { Component } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 
-import { StaffService } from '@app/_services';
+import { StaffService, AlertService } from '@app/_services';
 import { Staff } from '@app/_models';
-import { Router } from '@angular/router';
 
 @Component({ templateUrl: 'staff.component.html' })
 export class StaffComponent {
@@ -17,7 +16,10 @@ export class StaffComponent {
   confirmClicked = false;
   cancelClicked = false;
 
-  constructor(private staffService: StaffService, private router: Router) {}
+  constructor(
+    private staffService: StaffService,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -30,6 +32,7 @@ export class StaffComponent {
       });
   }
 
+  /** Tìm kiếm */
   Search() {
     if (this.Name == '') {
       this.ngOnInit();
@@ -44,20 +47,33 @@ export class StaffComponent {
   }
 
   key: string = 'PK_StaffID';
-  reverse: boolean = false;
+  reverse: boolean = true;
+  /** Sắp xếp */
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
 
+  /** Xóa nhân viên */
   deleteStaff(id: number) {
     const staff = this.staffs.find((x) => x.PK_StaffID === id);
-    staff.isDeleting = true;
     this.staffService
       .delete(id)
       .pipe(first())
       .subscribe(
-        () => (this.staffs = this.staffs.filter((x) => x.PK_StaffID !== id))
-      );
+        () => this.loadStaffs());
+  }
+
+  /** Reload danh sách nhân viên */
+  private loadStaffs() {
+    this.alertService.success('Xóa thành công');
+    this.loading = true;
+    this.staffService
+      .getAll()
+      .pipe(first())
+      .subscribe((staffs) => {
+        this.loading = false;
+        this.staffs = staffs;
+      });
   }
 }

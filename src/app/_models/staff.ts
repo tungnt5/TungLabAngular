@@ -3,5 +3,4 @@ export class Staff {
     Name: string;
     Email: string;
     Tel: string;
-    isDeleting: boolean = false;
 }

@@ -7,21 +7,32 @@
             <input type="text" formControlName="PK_StaffID" class="form-control" [readonly]="true" />
         </div>
     </div>
-    <div class="form-row">
+    <!-- <div class="form-row">
         <div class="form-group col-6">
             <label>Name</label>
-            <input type="text" formControlName="Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
+            <input type="text" formControlName="Name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
             <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
                 <div *ngIf="f.Name.errors.required">Vui lòng nhập Tên</div>
             </div>
+        </div>
+    </div> -->
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label>Name</label>
+            <input type="text" formControlName="Name" class="form-control"
+                [ngClass]="{ 'is-invalid': f.Name.touched && f.Name.errors }" />
+                <div *ngIf="f.Name.touched && f.Name.errors" class="invalid-feedback">
+                    <div *ngIf="f.Name.errors.required">Vui lòng nhập Tên</div>
+                </div>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-6">
             <label>Email</label>
             <input type="text" formControlName="Email" class="form-control"
-                 [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" />
-            <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+                [ngClass]="{ 'is-invalid': f.Email.touched && f.Email.errors }" />
+            <div *ngIf="f.Email.touched && f.Email.errors" class="invalid-feedback">
                 <div *ngIf="f.Email.errors.required">Vui lòng nhập Email</div>
                 <div *ngIf="f.Email.errors.pattern">Email không hợp lệ</div>
             </div>
@@ -30,8 +41,9 @@
     <div class="form-row">
         <div class="form-group col-6">
             <label>Tel</label>
-            <input type="tel" formControlName="Tel" class="form-control" maxlength="14" [ngClass]="{ 'is-invalid': submitted && f.Tel.errors }" />
-            <div *ngIf="submitted && f.Tel.errors" class="invalid-feedback">
+            <input type="tel" formControlName="Tel" class="form-control" maxlength="14"
+                [ngClass]="{ 'is-invalid': f.Tel.touched && f.Tel.errors }" />
+            <div *ngIf="f.Tel.touched && f.Tel.errors" class="invalid-feedback">
                 <div *ngIf="f.Tel.errors.required">Vui lòng nhập Tel</div>
                 <div *ngIf="f.Tel.errors.pattern">Tel không hợp lệ</div>
             </div>

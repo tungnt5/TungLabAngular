@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { StaffService, AlertService } from '@app/_services';
@@ -26,13 +26,13 @@ export class AddEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
 
-    const PAT_TEL = "[0-9]{1,9}-[0-9]{1,9}-[0-9]{1,9}";
-    const PAT_EMAIL = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    const PAT_TEL = '[0-9]{1,9}-[0-9]{1,9}-[0-9]{1,9}';
+    const PAT_EMAIL = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
     this.form = this.formBuilder.group({
       PK_StaffID: this.id,
       Name: ['', Validators.required],
-      Email: ['', [Validators.required , Validators.email, Validators.pattern(PAT_EMAIL)]],
+      Email: ['', [Validators.required, Validators.email, Validators.pattern(PAT_EMAIL)]],
       Tel: ['', [Validators.required, Validators.pattern(PAT_TEL)]],
     });
 
@@ -63,13 +63,14 @@ export class AddEditComponent implements OnInit {
     this.loading = true;
 
     if (this.isAddMode) {
-      this.createUser();
+      this.createStaff();
     } else {
-      this.updateUser();
+      this.updateStaff();
     }
   }
 
-  private createUser() {
+  /** Thêm mới nhân viên */
+  createStaff() {
     this.staffService
       .checkEmail('0', this.form.get('Email').value)
       .subscribe((res) => {
@@ -96,7 +97,8 @@ export class AddEditComponent implements OnInit {
       });
   }
 
-  private updateUser() {
+  /** Cập nhật thông tin nhân viên */
+  updateStaff() {
     this.staffService
       .checkEmail(this.id, this.form.get('Email').value)
       .subscribe((res) => {
