@@ -1,6 +1,5 @@
 ﻿import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
 
 import { StaffService } from '@app/_services';
 import { Staff } from '@app/_models';
@@ -18,7 +17,7 @@ export class StaffComponent {
   confirmClicked = false;
   cancelClicked = false;
 
-  constructor(private staffService: StaffService, private router: Router, public dialog: MatDialog) {}
+  constructor(private staffService: StaffService, private router: Router) {}
 
   ngOnInit() {
     this.loading = true;

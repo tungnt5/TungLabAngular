@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-jwt-authentication-example": {
+    "tunglab-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-jwt-authentication-example",
+            "outputPath": "dist/tunglab-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-jwt-authentication-example:build"
+            "browserTarget": "tunglab-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-jwt-authentication-example:build:production"
+              "browserTarget": "tunglab-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-jwt-authentication-example:build"
+            "browserTarget": ":build"
           }
         },
         "test": {
@@ -114,18 +114,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-jwt-authentication-example:serve"
+            "devServerTarget": "tunglab-angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-jwt-authentication-example:serve:production"
+              "devServerTarget": "tunglab-angular:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "angular-jwt-authentication-example",
+  "defaultProject": "tunglab-angular",
   "cli": {
     "analytics": false
   }
